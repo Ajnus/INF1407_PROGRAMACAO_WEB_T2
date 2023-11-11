@@ -7,4 +7,5 @@ urlpatterns = [
     path("lista/",views.PublicacaoView.as_view(),
     name = 'lista-pubs'
     ),
+    path('pub/cria', views.PublicacaoView.as_view(), name='pub-cria'),
 ]

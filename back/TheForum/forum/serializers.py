@@ -4,7 +4,7 @@ from forum.models import Publicacao, Comentario
 class PublicacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publicacao # nome do modelo
-        fields = Publicacao.titulo
+        fields = ['titulo', 'texto']
         #fields = '__all__' # lista de campos
 
 
