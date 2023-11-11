@@ -31,6 +31,7 @@ from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCom
 
 
 urlpatterns = [
+    #path('/'),
     path('admin/', admin.site.urls),
     path("forum/", include('forum.urls')),
 ]
