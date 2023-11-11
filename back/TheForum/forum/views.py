@@ -56,3 +56,12 @@ class PublicacaoView(APIView):
         else:
             return Response(serializer.errors,
                             status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request,id_arg):
+        pub = Publicacao.objects.get(id=id_arg)
+        if pub:
+            pub.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({'error': f'item [{id_arg}] não encontrado'},status.HTTP_404_NOT_FOUND)
+        
