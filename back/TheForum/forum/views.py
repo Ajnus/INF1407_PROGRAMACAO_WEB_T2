@@ -4,9 +4,16 @@ from rest_framework.views import APIView
 from forum.models import Publicacao
 from rest_framework.response import Response
 from rest_framework import status
+from drf_yasg.utils import swagger_auto_schema
 
 
 class PublicacoesView(APIView):
+    @swagger_auto_schema(
+        operation_summary='Lista todas as publicacoes',
+        operation_description="Obter informações sobre todas as publicacoes",
+        request_body=None, # opcional
+        responses={200: PublicacaoSerializer()}
+    )
     def get(self, request):
         queryset = Publicacao.objects.all().order_by('titulo')
         # importante informar que o queryset terá mais
