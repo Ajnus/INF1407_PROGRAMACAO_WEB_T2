@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 class Publicacao(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(
-    max_length=100, help_text='Entre com o título:')
+    max_length=100, help_text='Entre com o titulo:')
     texto = models.CharField(
-    max_length=10000, help_text='Digite o texto da publicação:')
+    max_length=10000, help_text='Digite o texto da publicacao:')
     autor = models.ForeignKey(User, on_delete=models.CASCADE,default=None, null=True)
     data_publicacao = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
@@ -17,7 +17,7 @@ class Publicacao(models.Model):
 class Comentario(models.Model):
     id = models.AutoField(primary_key=True)
     texto = models.CharField(
-    max_length=100, help_text='Digite o comentário:')
+    max_length=100, help_text='Digite o comentario:')
     idPublicacao  = models.ForeignKey(Publicacao,on_delete=models.CASCADE)
     autor = models.ForeignKey(User, on_delete=models.CASCADE,default=None, null=True)
     data_publicacao = models.DateTimeField(auto_now_add=True, blank=True, null=True)
