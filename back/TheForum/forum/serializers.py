@@ -4,8 +4,8 @@ from forum.models import Publicacao, Comentario
 class PublicacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publicacao # nome do modelo
-        fields = ['titulo', 'texto']
-        #fields = '__all__' # lista de campos
+        fields = ['id', 'titulo', 'texto']
+        read_only_fields = ['id']
 
 
 class ComentarioSerializer(serializers.ModelSerializer):

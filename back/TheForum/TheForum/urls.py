@@ -29,6 +29,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCompleteView
 from drf_yasg.views import get_schema_view as yasg_schema_view
+from rest_framework.schemas import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions,routers
 from rest_framework.documentation import include_docs_urls
@@ -48,6 +49,7 @@ schema_view = yasg_schema_view(
 
 
 urlpatterns = [
+    path('api_schema', get_schema_view(title="API para Forum",description="API para obter dados do forum"),name='api_schema'),
     path('docs/',
         include_docs_urls(title='TheForum: Documentação da API')),
     path('swagger/',
