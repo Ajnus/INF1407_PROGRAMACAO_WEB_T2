@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from forum.serializers import PublicacaoSerializer
+from forum.serializers import PublicacaoSerializer,ComentarioSerializer
 from rest_framework.views import APIView
-from forum.models import Publicacao
+from forum.models import Publicacao,Comentario
 from rest_framework.response import Response
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
@@ -75,7 +75,8 @@ class PublicacaoView(APIView):
     def get(self, request, id_arg):
         queryset = self.singleObj(id_arg,Publicacao)
         if queryset:
-            serializer = PublicacaoSerializer(queryset)
+            serializer = PublicacaoSerializer(queryset,many=False)
+            print(serializer.data)
             return Response(serializer.data)
         else:
             # response for IDs that is not an existing pub
@@ -140,3 +141,60 @@ class PublicacaoView(APIView):
         else:
             return Response({'error': f'item [{id_arg}] não encontrado'},status.HTTP_404_NOT_FOUND)
         
+
+class ComentarioCriaView(APIView):
+    def singleObj(self, id_arg, obj):
+        try:
+            queryset = obj.objects.get(id=id_arg)
+            return queryset
+        except obj.DoesNotExist: # id não existe
+            return None
+
+    @swagger_auto_schema(
+        operation_summary='Criar Comentario', operation_description="Criar um novo Comentario",
+        request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+        'idPublicacao': openapi.Schema(default=0, description='Id da Publicacao referente', type=openapi.TYPE_INTEGER),
+        'texto': openapi.Schema(default=0, description='Texto  do comentario', type='string'),
+        },
+        ),
+        responses={201: ComentarioSerializer(), 400: 'Dados errados',},
+    )
+    def post(self, request):
+        serializer = ComentarioSerializer(data=request.data)
+        print("JDSIAUJDISUA")
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,
+                    status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status.HTTP_400_BAD_REQUEST)
+                            
+class ComentarioView(APIView):
+    @swagger_auto_schema(
+        operation_summary='Apagar um comentario',
+        operation_description="Apagar um comentario específico",
+        responses={
+        204: 'Ok',
+        400: 'Mensagem de erro',
+        },
+        manual_parameters=[
+                            openapi.Parameter('id_arg',openapi.IN_PATH,
+                                            default=5,
+                                            type=openapi.TYPE_INTEGER,
+                                            required=True,
+                                            description='id do comentario na URL',
+                                            ),
+                        ],
+    )
+    def delete(self, request,id_arg):
+        print("Estou em delete")
+        com = Comentario.objects.filter(id=id_arg)
+        print("Passei do com")
+        if com:
+            com.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({'error': f'item [{id_arg}] não encontrado'},status.HTTP_404_NOT_FOUND)
