@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'forum',
+    'accounts',
     'drf_yasg',
     'coreapi',
+    'rest_framework.authtoken',
+    #'django_rest_passwordreset',
 ]
 
 MIDDLEWARE = [
@@ -141,5 +144,8 @@ CORS_ORIGIN_WHITELIST = [
 
 REST_FRAMEWORK = {
 'DEFAULT_SCHEMA_CLASS':
-'rest_framework.schemas.coreapi.AutoSchema'
+'rest_framework.schemas.coreapi.AutoSchema',
+'DEFAULT_AUTHENTICATION_CLASSES': [
+'rest_framework.authentication.TokenAuthentication',
+]
 }
