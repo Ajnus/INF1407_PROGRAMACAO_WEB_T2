@@ -147,5 +147,14 @@ REST_FRAMEWORK = {
 'rest_framework.schemas.coreapi.AutoSchema',
 'DEFAULT_AUTHENTICATION_CLASSES': [
 'rest_framework.authentication.TokenAuthentication',
-]
+],
+'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+        # Other permission classes if needed
+],
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'rest_framework.authentication.TokenAuthentication',
+]

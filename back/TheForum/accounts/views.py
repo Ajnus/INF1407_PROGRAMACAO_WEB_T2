@@ -1,13 +1,46 @@
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,generics
 # Autenticação
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 # Swagger
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from accounts.serializers import CreateUserSerializer, UserSerializer
+from rest_framework.views import APIView
+
+class CreateUserView(APIView):
+    @swagger_auto_schema(
+        operation_summary='Criar um novo usuário',
+        operation_description='Retorna o token em caso de sucesso na criação do usuário',
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING),
+                'password': openapi.Schema(type=openapi.TYPE_STRING),
+                'email': openapi.Schema(type=openapi.TYPE_STRING),
+                # Adicione outros campos necessários para a criação do usuário
+            },
+            required=['username', 'password', 'email'],
+        ),
+        responses={
+            status.HTTP_201_CREATED: 'Usuário criado com sucesso.',
+            status.HTTP_400_BAD_REQUEST: 'Erro na requisição.',
+        },
+    )
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            # uma boa prática é retornar o próprio objeto a
+            return Response(serializer.data,
+            status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status.HTTP_400_BAD_REQUEST)   
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -28,16 +61,28 @@ class CustomAuthToken(ObtainAuthToken):
         },
     )
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer = self.serializer_class(data=request.data)
+        
         if serializer.is_valid():
-            username = serializer.validated_data['username']
-            password = serializer.validated_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                token, _ = Token.objects.get_or_create(user=user)
-                login(request, user)
-                return Response({'token': token.key})
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+            print("entrei")
+            username = serializer.validated_data.get('username')
+            password = serializer.validated_data.get('password')
+
+            if username is not None and password is not None:
+                user = authenticate(request, username=username, password=password)
+                
+                if user is not None:
+                    # Token generation
+                    token, _ = Token.objects.get_or_create(user=user)
+                    login(request, user)
+                    
+                    # Log or print the token for debugging
+                    print("Token:", token.key)
+                    
+                    return Response({'token': token.key})
+        print("tchau")
+        print(serializer.errors)
+        return Response({'non_field_errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
         operation_summary='Obtém o username do usuário',
