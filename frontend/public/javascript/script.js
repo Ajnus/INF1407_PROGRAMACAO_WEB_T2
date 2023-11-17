@@ -3,9 +3,10 @@ onload = function () {
     exibeListaPubs(); // exibe lista de publicacoes ao carregar a página
 };
 function exibeListaPubs() {
-    fetch(backendAddress + "carros/lista/")
+    fetch(backendAddress + "forum/pub/lista/")
         .then(response => response.json())
         .then(pubs => {
+        console.log(pubs);
         let campos = ['titulo'];
         let tbody = document.getElementById('idtbody');
         tbody.innerHTML = "";

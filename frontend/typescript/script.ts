@@ -3,9 +3,10 @@ onload = function () {
     }
 
     function exibeListaPubs() {
-        fetch(backendAddress + "carros/lista/")
+        fetch(backendAddress + "forum/pub/lista/")
         .then(response => response.json())
         .then(pubs => {
+            console.log(pubs)
             let campos = ['titulo'];
             let tbody = document.getElementById('idtbody') as HTMLTableSectionElement;
             tbody.innerHTML = ""
