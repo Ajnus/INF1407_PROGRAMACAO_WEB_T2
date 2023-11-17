@@ -7,14 +7,14 @@ function exibeListaPubs() {
         .then(response => response.json())
         .then(pubs => {
         console.log(pubs);
-        let campos = ['titulo'];
+        let campos = ['titulo', 'texto'];
         let tbody = document.getElementById('idtbody');
         tbody.innerHTML = "";
         for (let pub of pubs) {
             let tr = document.createElement('tr');
             for (let i = 0; i < campos.length; i++) {
                 let td = document.createElement('td');
-                let texto = document.createTextNode(pub[pubs[i]]);
+                let texto = document.createTextNode(pub[campos[i]]); // Correção aqui
                 td.appendChild(texto);
                 tr.appendChild(td);
             }
