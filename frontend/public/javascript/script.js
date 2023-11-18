@@ -17,9 +17,10 @@ function exibeListaPubs() {
             for (let i = 0; i < campos.length; i++) {
                 let td = document.createElement('td');
                 let href = document.createElement('a');
-                href.setAttribute('href', 'update.html?id=' + pub['id']);
+                href.setAttribute('href', 'updatePub.html?id=' + pub['id']);
                 let texto = document.createTextNode(pub[campos[i]]); // Correção aqui
-                td.appendChild(texto);
+                href.appendChild(texto);
+                td.appendChild(href);
                 tr.appendChild(td);
             }
             tbody.appendChild(tr);

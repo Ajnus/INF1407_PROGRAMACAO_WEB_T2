@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Atualização de Publicacao</title>
-    <script src="javascript/update.js"></script>
+    <script src="javascript/updatePub.js"></script>
     <script src="javascript/constantes.js"></script>
 </head>
+<body>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
+    <h1>Atualizando a Publicacao #<span id='id'></span></h1>
+    <form id="meuFormulario">
+    <input type="hidden" name="id" id="id">
+    <table>
+    <tbody>
+    <tr><td align="right">titulo:</td><td><input type="text" name="titulo" id="titulo"></td></tr>
+    <tr><td align="right">texto:</td><td><input type="text" name="texto" id="texto"></td></tr>
+    </tbody>
+    </table>
+    <button id="atualiza" name="atualiza" value="Atualiza">Atualiza</button>
+    </form>
+    <div id="mensagem"></div>
+    </body>
+</html>
