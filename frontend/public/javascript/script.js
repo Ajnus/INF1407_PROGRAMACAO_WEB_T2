@@ -1,5 +1,7 @@
 "use strict";
 onload = function () {
+    document.getElementById('insere').
+        addEventListener('click', evento => { location.href = 'inserePub.html'; });
     exibeListaPubs(); // exibe lista de publicacoes ao carregar a página
 };
 function exibeListaPubs() {
@@ -14,6 +16,8 @@ function exibeListaPubs() {
             let tr = document.createElement('tr');
             for (let i = 0; i < campos.length; i++) {
                 let td = document.createElement('td');
+                let href = document.createElement('a');
+                href.setAttribute('href', 'update.html?id=' + pub['id']);
                 let texto = document.createTextNode(pub[campos[i]]); // Correção aqui
                 td.appendChild(texto);
                 tr.appendChild(td);
