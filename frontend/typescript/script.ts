@@ -9,7 +9,7 @@ function exibeListaPubs() {
         .then(response => response.json())
         .then(pubs => {
             console.log(pubs);
-            let campos = ['titulo', 'texto', 'editar']; // Adicionei 'editar' como terceiro campo
+            let campos = ['titulo', 'texto', 'editar','deletar']; // Adicionei 'editar' como terceiro campo
             let tbody = document.getElementById('idtbody') as HTMLTableSectionElement;
             tbody.innerHTML = "";
             for (let pub of pubs) {
@@ -18,14 +18,23 @@ function exibeListaPubs() {
                     let td = document.createElement('td') as HTMLTableCellElement;
                     if (campos[i] === 'editar') {
                         let href = document.createElement('a') as HTMLAnchorElement;
-                        href.setAttribute('href', 'update.html?id=' + pub['id']);
+                        href.setAttribute('href', 'updatePub.html?id=' + pub['id']);
                         let texto = document.createTextNode("Editar") as Text;
                         href.appendChild(texto);
                         td.appendChild(href);
                     } else {
-                        // Caso contrário, adiciona um link para o campo correspondente
-                        let texto = document.createTextNode(pub[campos[i]]) as Text;
-                        td.appendChild(texto);
+                            if (campos[i] === 'deletar'){
+                                let href = document.createElement('a') as HTMLAnchorElement;
+                                href.setAttribute('href', 'deletePub.html?id=' + pub['id']);
+                                let texto = document.createTextNode("Apagar") as Text;
+                                href.appendChild(texto);
+                                td.appendChild(href);                               
+                            }
+                            else {
+                            // Caso contrário, adiciona um link para o campo correspondente
+                            let texto = document.createTextNode(pub[campos[i]]) as Text;
+                            td.appendChild(texto);
+                            }
                     }
                     tr.appendChild(td);
                 }
