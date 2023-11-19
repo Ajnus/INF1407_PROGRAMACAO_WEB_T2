@@ -7,14 +7,38 @@ onload = () => {
     const idPlace = document.getElementById('id');
     if (id) {
         console.log('id = ', id);
-        idPlace.innerHTML = id;
+        console.log('idPlace =', idPlace);
+        //idPlace.innerHTML = id;
         fetch(backendAddress + 'forum/pub/' + id + '/')
             .then(response => response.json())
-            .then(carro => {
-            let campos = ['titulo', 'texto'];
-            for (let i = 0; i < campos.length; i++) {
-                document.getElementById(campos[i]).value = carro[campos[i]];
-            }
+            .then(pub => {
+            // Adicione esta linha para exibir a mensagem desejada
+            const mensagem = `Deseja apagar a publicação "${pub.titulo}"?`;
+            const mensagemPlace = document.getElementById('mensagem');
+            mensagemPlace.innerText = mensagem;
+            // Adicione um listener para o botão de confirmação
+            const botaoCancelar = document.getElementById('botaoCancelar');
+            botaoCancelar.addEventListener('click', () => {
+                // Redirecionar para index.html
+                window.location.href = 'index.html';
+            });
+            const botaoConfirmar = document.getElementById('botaoConfirmar');
+            botaoConfirmar.addEventListener('click', () => {
+                console.log('Botão de confirmação clicado');
+                // Adicione aqui a lógica para enviar a solicitação de exclusão ao backend
+                fetch(backendAddress + 'forum/pub/' + id + '/', {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                    // Adicione aqui o tratamento da resposta do backend
+                    console.log('Publicação excluída com sucesso!');
+                    // Redirecione para alguma página após a exclusão
+                    window.location.href = 'index.html';
+                })
+                    .catch(erro => {
+                    console.error('Erro ao excluir publicação:', erro);
+                });
+            });
         })
             .catch(erro => {
             console.log('Deu erro: ' + erro);
@@ -23,32 +47,4 @@ onload = () => {
     else {
         idPlace.innerHTML = 'URL mal formada: ' + window.location;
     }
-    document.getElementById('atualiza')
-        .addEventListener('click', (evento) => {
-        evento.preventDefault();
-        const form = document.getElementById('meuFormulario');
-        const elements = form.elements;
-        let data = {};
-        for (let i = 0; i < elements.length; i++) {
-            const element = elements[i];
-            data[element.name] = element.value;
-        }
-        fetch(backendAddress + "forum/pub/" + id + '/', {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' },
-        })
-            .then(response => {
-            if (response.ok) {
-                document.getElementById('mensagem').innerHTML = 'Sucesso';
-            }
-            else {
-                document.getElementById('mensagem').innerHTML = 'Erro: '
-                    + response.status + " " + response.statusText;
-            }
-        })
-            .catch(erro => {
-            console.log('Deu erro: ' + erro);
-        });
-    });
 };

@@ -9,10 +9,10 @@ onload = () => {
         idPlace.innerHTML = id;
         fetch(backendAddress + 'forum/pub/' + id + '/')
         .then(response => response.json())
-        .then(carro => {
+        .then(pub => {
             let campos = ['titulo', 'texto']
             for(let i=0; i<campos.length; i++) {
-                (document.getElementById(campos[i]) as HTMLInputElement).value = carro[campos[i]];
+                (document.getElementById(campos[i]) as HTMLInputElement).value = pub[campos[i]];
             }
         })
         .catch(erro => {
