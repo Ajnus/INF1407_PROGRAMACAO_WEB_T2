@@ -17,14 +17,11 @@ function exibeListaPubs() {
             for (let i = 0; i < campos.length; i++) {
                 let td = document.createElement('td');
                 if (campos[i] === 'editar') {
-                    // Se o campo for 'editar', adiciona um botão de edição
-                    //console.log(campos[i])
-                    let editarButton = document.createElement('button');
-                    editarButton.innerText = 'Editar';
-                    editarButton.addEventListener('click', () => {
-                        location.href = 'updatePub.html?id=' + pub['id'];
-                    });
-                    td.appendChild(editarButton);
+                    let href = document.createElement('a');
+                    href.setAttribute('href', 'updatePub.html?id=' + pub['id']);
+                    let texto = document.createTextNode("Editar");
+                    href.appendChild(texto);
+                    td.appendChild(href);
                 }
                 else {
                     // Caso contrário, adiciona um link para o campo correspondente
