@@ -7,11 +7,11 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.decorators import permission_classes
 from rest_framework.decorators import authentication_classes
 
-
+@permission_classes([AllowAny])
 class PublicacoesView(APIView):
     @swagger_auto_schema(
         operation_summary='Lista todas as publicacoes',
