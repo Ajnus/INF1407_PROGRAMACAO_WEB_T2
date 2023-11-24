@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
+from django.contrib.auth import logout
 # Swagger
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -113,7 +114,8 @@ class CustomAuthToken(ObtainAuthToken):
         Retorna: o username ou 'visitante'
         '''
         try:
-            token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1] # token
+            token = request.META.get('HTTP_AUTHORIZATION').split(' ')[0] # token
+            
             token_obj = Token.objects.get(key=token)
             user = token_obj.user
             return Response(
@@ -124,3 +126,39 @@ class CustomAuthToken(ObtainAuthToken):
                 {'username': 'visitante'},
                 status=status.HTTP_404_NOT_FOUND)
 
+    @swagger_auto_schema(
+        operation_description='Realiza logout do usuário, apagando o seu token',
+        operation_summary='Realiza logout',
+        security=[{'Token':[]}],
+        manual_parameters=[
+        openapi.Parameter('Authorization', openapi.IN_HEADER,
+        type=openapi.TYPE_STRING, default='token ',
+        description='Token de autenticação no formato "token \<<i>valor do token</i>\>"',
+        ),
+        ],
+        request_body=None,
+        responses={
+        status.HTTP_200_OK: 'User logged out',
+        status.HTTP_400_BAD_REQUEST: 'Bad request',
+        status.HTTP_401_UNAUTHORIZED: 'User not authenticated',
+        status.HTTP_403_FORBIDDEN: 'User not authorized to logout',
+        status.HTTP_500_INTERNAL_SERVER_ERROR: 'Erro no servidor',
+        },
+    )
+    def delete(self, request):
+        try:
+            token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]
+            token_obj = Token.objects.get(key=token)
+        except (Token.DoesNotExist, IndexError):
+            return Response({'msg': 'Token não existe.'}, status=status.HTTP_400_BAD_REQUEST)
+        user = token_obj.user
+        if user.is_authenticated:
+            request.user = user
+            logout(request)
+            token = Token.objects.get(user=user)
+            token.delete()
+            return Response({'msg': 'Logout bem-sucedido.'},
+            status=status.HTTP_200_OK)
+        else:
+            return Response({'msg': 'Usuário não autenticado.'},
+            status=status.HTTP_403_FORBIDDEN)

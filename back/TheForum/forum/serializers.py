@@ -12,6 +12,6 @@ class PublicacaoSerializer(serializers.ModelSerializer):
     comentarios = ComentarioSerializer(many=True, read_only=True)
     class Meta:
         model = Publicacao # nome do modelo
-        fields = ['id', 'titulo', 'texto','comentarios']
+        fields = ['id', 'titulo', 'texto','comentarios','autor']
         read_only_fields = ['id']
 

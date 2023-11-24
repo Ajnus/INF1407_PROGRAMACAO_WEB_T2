@@ -6,6 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+from rest_framework.decorators import authentication_classes
 
 
 class PublicacoesView(APIView):
@@ -13,7 +17,7 @@ class PublicacoesView(APIView):
         operation_summary='Lista todas as publicacoes',
         operation_description="Obter informações sobre todas as publicacoes",
         request_body=None, # opcional
-        responses={200: PublicacaoSerializer()}
+        responses={200: PublicacaoSerializer()},
     )
     def get(self, request):
         queryset = Publicacao.objects.all().order_by('titulo')
@@ -24,6 +28,8 @@ class PublicacoesView(APIView):
 
 
 
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 class PublicacaoCriaView(APIView):
     @swagger_auto_schema(
         operation_summary='Criar Pub', operation_description="Criar uma nova publicacao",
@@ -37,6 +43,8 @@ class PublicacaoCriaView(APIView):
         responses={201: PublicacaoSerializer(), 400: 'Dados errados',},
     )
     def post(self, request):
+        print(request.user.username)
+        request.data['autor'] = request.user.id
         serializer = PublicacaoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -84,6 +92,8 @@ class PublicacaoView(APIView):
                             'msg': f'Publicacao com id #{id_arg} não existe'
                             }, status.HTTP_400_BAD_REQUEST)
 
+    @authentication_classes([TokenAuthentication])
+    @permission_classes([IsAuthenticated])
     @swagger_auto_schema(
         operation_summary='Atualizar uma publicacao',
         operation_description="Atualizar informações sobre uma publicacao específica",
@@ -114,9 +124,11 @@ class PublicacaoView(APIView):
             serializer.save()
             return Response(serializer.data,status.HTTP_200_OK)
         else:
+            print(serializer.data)
             return Response(serializer.errors,
                             status.HTTP_400_BAD_REQUEST)
-    
+    @authentication_classes([TokenAuthentication])
+    @permission_classes([IsAuthenticated])
     @swagger_auto_schema(
         operation_summary='Apagar uma publicacao',
         operation_description="Apagar uma publicacao específica",
@@ -133,15 +145,22 @@ class PublicacaoView(APIView):
                                             ),
                         ],
     )
+    @authentication_classes([TokenAuthentication])
+    @permission_classes([IsAuthenticated])
     def delete(self, request,id_arg):
-        pub = Publicacao.objects.get(id=id_arg)
-        if pub:
-            pub.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
+        try: 
+            print('Id arg ', id_arg)
+            pub = Publicacao.objects.get(id=id_arg)
+            if (pub.autor.id == request.user.id):
+                pub.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response({'error': f'Usuario sem autorizacao'},status.HTTP_403_FORBIDDEN)
+        except:
             return Response({'error': f'item [{id_arg}] não encontrado'},status.HTTP_404_NOT_FOUND)
         
-
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 class ComentarioCriaView(APIView):
     def singleObj(self, id_arg, obj):
         try:
