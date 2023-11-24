@@ -8,7 +8,7 @@ onload = () => {
     if (id) {
         console.log('id = ', id);
         idPlace.innerHTML = id;
-        fetch(backendAddress + 'forum/pub/' + id + '/')
+        fetch(backendAddress + 'forum/pub/public/' + id + '/')
             .then(response => response.json())
             .then(pub => {
             let campos = ['titulo', 'texto'];

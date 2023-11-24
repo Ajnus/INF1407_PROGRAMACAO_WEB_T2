@@ -55,8 +55,10 @@ class PublicacaoCriaView(APIView):
             return Response(serializer.errors,
                             status.HTTP_400_BAD_REQUEST)
             
-@permission_classes([AllowAny])            
-class PublicacaoView(APIView):
+
+
+@permission_classes([AllowAny])   
+class PublicacaoViewPublic(APIView):
     def singleObj(self, id_arg, obj):
         try:
             queryset = obj.objects.get(id=id_arg)
@@ -81,6 +83,7 @@ class PublicacaoView(APIView):
                                             ),
                         ],
     )
+    @permission_classes([AllowAny])  
     def get(self, request, id_arg):
         queryset = self.singleObj(id_arg,Publicacao)
         if queryset:
@@ -93,8 +96,17 @@ class PublicacaoView(APIView):
                             'msg': f'Publicacao com id #{id_arg} não existe'
                             }, status.HTTP_400_BAD_REQUEST)
 
-    @authentication_classes([TokenAuthentication])
-    @permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+class PublicacaoView(APIView):
+    def singleObj(self, id_arg, obj):
+        try:
+            queryset = obj.objects.get(id=id_arg)
+            return queryset
+        except obj.DoesNotExist: # id não existe
+            return None
+  
+
     @swagger_auto_schema(
         operation_summary='Atualizar uma publicacao',
         operation_description="Atualizar informações sobre uma publicacao específica",
@@ -128,8 +140,6 @@ class PublicacaoView(APIView):
             print(serializer.data)
             return Response(serializer.errors,
                             status.HTTP_400_BAD_REQUEST)
-    @authentication_classes([TokenAuthentication])
-    @permission_classes([IsAuthenticated])
     @swagger_auto_schema(
         operation_summary='Apagar uma publicacao',
         operation_description="Apagar uma publicacao específica",
@@ -146,8 +156,6 @@ class PublicacaoView(APIView):
                                             ),
                         ],
     )
-    @authentication_classes([TokenAuthentication])
-    @permission_classes([IsAuthenticated])
     def delete(self, request,id_arg):
         try: 
             print('Id arg ', id_arg)

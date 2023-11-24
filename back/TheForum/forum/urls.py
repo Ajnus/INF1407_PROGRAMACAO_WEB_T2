@@ -9,4 +9,6 @@ urlpatterns = [
     path('pub/<id_arg>/', views.PublicacaoView.as_view(), name='consulta-pub'),
     path('com/cria/', views.ComentarioCriaView.as_view(), name='comentario-cria'),
     path('com/<id_arg>/', views.ComentarioView.as_view(), name='apaga-com'),
+    path('pub/public/<id_arg>/', views.PublicacaoViewPublic.as_view(), name='consulta-pub'),
+
 ]
