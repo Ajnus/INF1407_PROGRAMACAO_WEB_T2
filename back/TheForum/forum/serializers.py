@@ -10,8 +10,9 @@ class ComentarioSerializer(serializers.ModelSerializer):
 
 class PublicacaoSerializer(serializers.ModelSerializer):
     comentarios = ComentarioSerializer(many=True, read_only=True)
+    autor_username = serializers.ReadOnlyField(source='autor.username')
     class Meta:
         model = Publicacao # nome do modelo
-        fields = ['id', 'titulo', 'texto','comentarios','autor']
+        fields = ['id', 'titulo', 'texto','comentarios','autor','autor_username']
         read_only_fields = ['id']
 

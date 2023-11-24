@@ -9,7 +9,7 @@ function exibeListaPubs() {
         .then(response => response.json())
         .then(pubs => {
         console.log(pubs);
-        let campos = ['titulo', 'texto', 'editar', 'deletar']; // Adicionei 'editar' como terceiro campo
+        let campos = ['titulo', 'autor_username', 'editar', 'deletar']; // Adicionei 'editar' como terceiro campo
         let tbody = document.getElementById('idtbody');
         tbody.innerHTML = "";
         for (let pub of pubs) {
