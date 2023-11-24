@@ -3,9 +3,10 @@ from forum.models import Publicacao, Comentario
 
 
 class ComentarioSerializer(serializers.ModelSerializer):
+    autor_username = serializers.ReadOnlyField(source='autor.username')
     class Meta:
         model = Comentario # nome do modelo
-        fields = ['id', 'texto','idPublicacao','autor']
+        fields = ['id', 'texto','idPublicacao','autor','autor_username']
         read_only_fields = ['id']
 
 class PublicacaoSerializer(serializers.ModelSerializer):
