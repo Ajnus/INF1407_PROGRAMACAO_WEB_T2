@@ -181,8 +181,9 @@ class ComentarioCriaView(APIView):
         responses={201: ComentarioSerializer(), 400: 'Dados errados',},
     )
     def post(self, request):
+        print(request.user.username)
+        request.data['autor'] = request.user.id
         serializer = ComentarioSerializer(data=request.data)
-        print("JDSIAUJDISUA")
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,
@@ -190,7 +191,9 @@ class ComentarioCriaView(APIView):
         else:
             return Response(serializer.errors,
                             status.HTTP_400_BAD_REQUEST)
-                            
+
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])               
 class ComentarioView(APIView):
     @swagger_auto_schema(
         operation_summary='Apagar um comentario',
@@ -209,11 +212,12 @@ class ComentarioView(APIView):
                         ],
     )
     def delete(self, request,id_arg):
-        print("Estou em delete")
-        com = Comentario.objects.filter(id=id_arg)
-        print("Passei do com")
-        if com:
-            com.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
+        try:
+            com = Comentario.objects.get(id=id_arg)
+            if (com.autor.id == request.user.id):
+                com.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response({'error': f'Usuario sem autorizacao'},status.HTTP_403_FORBIDDEN)
+        except:
             return Response({'error': f'item [{id_arg}] não encontrado'},status.HTTP_404_NOT_FOUND)

@@ -5,7 +5,7 @@ from forum.models import Publicacao, Comentario
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comentario # nome do modelo
-        fields = ['id', 'texto','idPublicacao']
+        fields = ['id', 'texto','idPublicacao','autor']
         read_only_fields = ['id']
 
 class PublicacaoSerializer(serializers.ModelSerializer):
