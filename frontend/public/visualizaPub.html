@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Visualiza Publicacao</title>
+    <script src="javascript/visualizaPub.js"></script>
+    <script src="javascript/constantes.js"></script>
+</head>
+<body>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
+    <h2>Publicacao #<span id='id'></span></h2>
+    <h1><span id='titulo'></span></h1>
+    <h8><span id='texto'></span></h8>
+
+    <form action="" method="get">
+        <table border="1">
+        <thead>
+        <tr>
+        <td>Publicacao</td><td>Texto</td><td> </td> <td> </td>
+        </tr>
+        </thead>
+        <tbody id="idtbody"></tbody>
+        </table>
+    
+        <input type="button" value="Insere" id="insere"/>
+    
+        </form>
+    </body>
+</html>

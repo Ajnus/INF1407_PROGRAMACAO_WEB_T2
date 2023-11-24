@@ -31,9 +31,17 @@ function exibeListaPubs() {
                                 td.appendChild(href);                               
                             }
                             else {
-                            // Caso contrário, adiciona um link para o campo correspondente
-                            let texto = document.createTextNode(pub[campos[i]]) as Text;
-                            td.appendChild(texto);
+                                if(campos[i] === 'titulo'){
+                                    let href = document.createElement('a') as HTMLAnchorElement;
+                                    href.setAttribute('href', 'visualizaPub.html?id=' + pub['id']);
+                                    let texto = document.createTextNode(pub[campos[i]]) as Text;
+                                    href.appendChild(texto);
+                                    td.appendChild(href);
+                                }
+                                else {                                                           // Caso contrário, adiciona um link para o campo correspondente
+                                    let texto = document.createTextNode(pub[campos[i]]) as Text;
+                                    td.appendChild(texto);
+                                }
                             }
                     }
                     tr.appendChild(td);
