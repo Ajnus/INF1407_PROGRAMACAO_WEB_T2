@@ -64,6 +64,7 @@ class PublicacaoView(APIView):
             return None
 
     # id_arg é o mesmo nome que colocamos em urls.py
+    @permission_classes([AllowAny])
     @swagger_auto_schema(
         operation_summary='Selecionar uma publicacao',
         operation_description="Obter informações sobre uma publicacao específica",
