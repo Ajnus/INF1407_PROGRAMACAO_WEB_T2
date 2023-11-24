@@ -5,21 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="javascript/inserePub.js"></script>
     <script src="javascript/constantes.js"></script>
 </head>
 
-<body>
+
+</head>
+
+<body class="bg-dark" style="margin-left: 5px;">
     <iframe src="cabecalho.html" frameborder="0" width="100%" height="50"></iframe>
-    <h1>Insere Pub</h1>
+    <h1 style="color: white;">Inserir Publicação</h1>
     <form id="meuFormulario">
     <table>
     <tbody>
-    <tr><td align="right">Titulo:</td><td><input type="text" name="titulo" id="titulo"></td></tr>
-    <tr><td align="right">Text:</td><td><input type="text" name="texto" id="texto"></td></tr>
+    <tr><td style="color: white;" align="right">Titulo:</td><td><input type="text" name="titulo" id="titulo"></td></tr>
+    <tr><td style="color: white;" align="right">Text:</td><td><input type="text" name="texto" id="texto"></td></tr>
     </tbody>
     </table>
-    <button id="insere" name="insere" value="Insere">Insere</button>
+    <td></td>
+    <button id="insere" name="insere" value="Insere" style="margin-top: 10px;">Inserir</button>
     </form>
     <div id="mensagem"></div>
     </body>
