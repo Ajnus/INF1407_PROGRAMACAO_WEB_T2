@@ -33,10 +33,14 @@ onload = () => {
             const element = elements[i];
             data[element.name] = element.value;
         }
+        const token = localStorage.getItem('token'); // Recupera o token de autenticação
         fetch(backendAddress + "forum/pub/" + id + '/', {
             method: 'PUT',
             body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': 'Token ' + token,
+                'Content-Type': 'application/json'
+            }
         })
             .then(response => {
             if (response.ok) {

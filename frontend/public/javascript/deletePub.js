@@ -26,8 +26,13 @@ onload = () => {
             botaoConfirmar.addEventListener('click', () => {
                 console.log('Botão de confirmação clicado');
                 // Adicione aqui a lógica para enviar a solicitação de exclusão ao backend
+                const token = localStorage.getItem('token'); // Recupera o token de autenticação
                 fetch(backendAddress + 'forum/pub/' + id + '/', {
                     method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Token ' + token,
+                        'Content-Type': 'application/json'
+                    }
                 })
                     .then(response => {
                     // Adicione aqui o tratamento da resposta do backend

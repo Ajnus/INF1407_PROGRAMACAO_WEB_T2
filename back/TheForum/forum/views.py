@@ -132,10 +132,15 @@ class PublicacaoView(APIView):
         )
     def put(self, request, id_arg):
         pub = self.singleObj(id_arg,Publicacao)
+    
         serializer = PublicacaoSerializer(pub,data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status.HTTP_200_OK)
+            if (pub.autor.id == request.user.id):                    
+                serializer.save()
+                return Response(serializer.data,status.HTTP_200_OK)
+            else:
+                return Response({'error': f'Usuario sem autorizacao'},status.HTTP_403_FORBIDDEN)
+
         else:
             print(serializer.data)
             return Response(serializer.errors,
