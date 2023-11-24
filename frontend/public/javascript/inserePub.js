@@ -8,9 +8,17 @@ onload = () => {
             const element = elements[i];
             data[element.name] = element.value;
         }
+        const token = localStorage.getItem('token'); // Recupera o token de autenticação
+        // Check if token is not null before using it in the headers
+        const headers = {
+            'Content-Type': 'application/json',
+        };
+        if (token !== null) {
+            headers['Authorization'] = 'Token ' + token;
+        }
         fetch(backendAddress + "forum/pub/cria/", {
             method: 'POST', body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json' }
+            headers: headers
         })
             .then(response => {
             if (response.ok) {
