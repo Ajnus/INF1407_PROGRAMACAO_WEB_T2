@@ -1,2 +1,25 @@
-<a href="/" target="_top">Home</a>
-<hr>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script src="javascript/autenticacao.js"></script>
+    <script src="javascript/constantes.js"></script>
+    <style>
+        #unlogged, #logged, #identificacao {
+            display: inline-block; /* Set to inline-block for horizontal alignment */
+            margin-right: 10px; /* Adjust the margin as needed for spacing */
+        }
+    </style>
+</head>
+<body>
+    <a href="/" target="_top">Home</a>
+    <div id="unlogged" class="visivel">
+    |   <a href="login.html" target="_top">Login</a>
+    </div>
+    <div id="logged" class="invisivel">
+        | <a href="passwordChange.html" target="_top">Troca senha</a>
+        | <a href="logout.html" target="_top">Logout</a>
+    </div>
+        | Você é <div id="identificacao" class="mesmaLinha">visitante</div>
+    <hr>
+</body>
+</html>
