@@ -54,7 +54,8 @@ class PublicacaoCriaView(APIView):
         else:
             return Response(serializer.errors,
                             status.HTTP_400_BAD_REQUEST)
-                            
+            
+@permission_classes([AllowAny])            
 class PublicacaoView(APIView):
     def singleObj(self, id_arg, obj):
         try:
@@ -64,7 +65,6 @@ class PublicacaoView(APIView):
             return None
 
     # id_arg é o mesmo nome que colocamos em urls.py
-    @permission_classes([AllowAny])
     @swagger_auto_schema(
         operation_summary='Selecionar uma publicacao',
         operation_description="Obter informações sobre uma publicacao específica",
