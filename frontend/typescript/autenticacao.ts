@@ -1,7 +1,9 @@
 window.addEventListener('load', () => {
     // Verifica o username e coloca no cabeçalho da página
     const token = localStorage.getItem('token'); // Recupera o token de autenticação
-
+    const loginRef = document.getElementById('loginRef') as HTMLSpanElement
+    const signupRef = document.getElementById('SignupRef') as HTMLSpanElement 
+    const logoutRef = document.getElementById('logoutRef') as HTMLSpanElement  
     // Check if token is not null before using it in the headers
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
@@ -21,20 +23,14 @@ window.addEventListener('load', () => {
             if (response.ok) {
                 // token enviado no cabeçalho foi aceito pelo servidor
                 let objDiv = (document.getElementById('logged') as HTMLDivElement);
-                objDiv.classList.remove('invisivel');
-                objDiv.classList.add('visivel');
-                objDiv = (document.getElementById('unlogged') as HTMLDivElement);
-                objDiv.classList.remove('visivel');
-                objDiv.classList.add('invisivel');
+                logoutRef.innerHTML = "| Log Out"
+
             } else {
                 // token enviado no cabeçalho foi rejeitado pelo servidor
                 usuario.username = 'visitante';
-                let objDiv = (document.getElementById('unlogged') as HTMLDivElement);
-                objDiv.classList.remove('invisivel');
-                objDiv.classList.add('visivel');
-                objDiv = (document.getElementById('logged') as HTMLDivElement);
-                objDiv.classList.remove('visivel');
-                objDiv.classList.add('invisivel');
+                loginRef.innerHTML = "| Log in"
+                signupRef.innerHTML = "| Sign In"
+               
             }
             
             const spanElement = document.getElementById('identificacao') as HTMLSpanElement;

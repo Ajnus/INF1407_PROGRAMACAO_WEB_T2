@@ -134,7 +134,9 @@ class PublicacaoView(APIView):
         pub = self.singleObj(id_arg,Publicacao)
     
         serializer = PublicacaoSerializer(pub,data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid() and pub and request.user.id:
+            print(pub.autor)
+            print(request.user)
             if (pub.autor.id == request.user.id):                    
                 serializer.save()
                 return Response(serializer.data,status.HTTP_200_OK)
