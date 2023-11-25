@@ -5,9 +5,8 @@ onload = () => {
         const password: string = (document.getElementById('password') as HTMLInputElement).value;
         const email: string = (document.getElementById('email') as HTMLInputElement).value;
 
-        const DeployBackAddress = "http://miguelgarcia2.pythonanywhere.com/";
 
-        fetch(DeployBackAddress + 'accounts/create-user/', {
+        fetch(backendAddress + 'accounts/create-user/', {
             method: 'POST',
             body: JSON.stringify({
                 'username': username,

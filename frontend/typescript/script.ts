@@ -5,10 +5,40 @@ onload = function () {
 }
 
 function exibeListaPubs() {
-    fetch(backendAddress + "forum/pub/lista/")
+
+
+    const token = localStorage.getItem('token'); // Recupera o token de autenticação
+
+    // Check if token is not null before using it in the headers
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+    };
+
+    if (token !== null) {
+        headers['Authorization'] = token;
+    }   
+    let username = 'visitante';
+
+    fetch(backendAddress + 'accounts/token-auth/', {
+        method: 'GET',
+        headers: headers,
+    })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            const usuario = data;
+            if (usuario.username) {
+                username = usuario.username;
+            }
+    
+            // Now that the first fetch is complete, initiate the second fetch
+            return fetch(backendAddress + "forum/pub/lista/");
+        })
         .then(response => response.json())
         .then(pubs => {
             console.log(pubs);
+            console.log(username);
             let campos = ['titulo', 'autor_username', 'editar','deletar']; // Adicionei 'editar' como terceiro campo
             let tbody = document.getElementById('idtbody') as HTMLTableSectionElement;
             tbody.innerHTML = "";
@@ -17,18 +47,30 @@ function exibeListaPubs() {
                 for (let i = 0; i < campos.length; i++) {
                     let td = document.createElement('td') as HTMLTableCellElement;
                     if (campos[i] === 'editar') {
-                        let href = document.createElement('a') as HTMLAnchorElement;
-                        href.setAttribute('href', 'updatePub.html?id=' + pub['id']);
-                        let texto = document.createTextNode("Editar") as Text;
-                        href.appendChild(texto);
-                        td.appendChild(href);
+                        if (pub['autor_username'] === username){
+                            let href = document.createElement('a') as HTMLAnchorElement;
+                            href.setAttribute('href', 'updatePub.html?id=' + pub['id']);
+                            let texto = document.createTextNode("Editar") as Text;
+                            href.appendChild(texto);
+                            td.appendChild(href);
+                            }
+                        else{
+                            let texto = document.createTextNode("") as Text;
+                            td.appendChild(texto);
+                        }
                     } else {
                             if (campos[i] === 'deletar'){
-                                let href = document.createElement('a') as HTMLAnchorElement;
-                                href.setAttribute('href', 'deletePub.html?id=' + pub['id']);
-                                let texto = document.createTextNode("Apagar") as Text;
-                                href.appendChild(texto);
-                                td.appendChild(href);                               
+                                if (pub['autor_username'] === username){
+                                    let href = document.createElement('a') as HTMLAnchorElement;
+                                    href.setAttribute('href', 'deletePub.html?id=' + pub['id']);
+                                    let texto = document.createTextNode("Apagar") as Text;
+                                    href.appendChild(texto);
+                                    td.appendChild(href);
+                                }
+                                else{
+                                    let texto = document.createTextNode("") as Text;
+                                    td.appendChild(texto);
+                                }                               
                             }
                             else {
                                 if(campos[i] === 'titulo'){
