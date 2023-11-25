@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
                 // token enviado no cabeçalho foi rejeitado pelo servidor
                 usuario.username = 'visitante';
                 loginRef.innerHTML = "| Log in";
-                signupRef.innerHTML = "| Sign In";
+                signupRef.innerHTML = "| Sign Up";
             }
             const spanElement = document.getElementById('identificacao');
             spanElement.innerHTML = usuario.username;
