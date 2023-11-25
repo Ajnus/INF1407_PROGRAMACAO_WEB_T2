@@ -66,7 +66,7 @@ Foi implementado autenticação completa, o CRUD completo de Publicações e CRD
 
 Durante o projeto tivemos mudanças de requisitos e optamos por fazer um Usuario com username, email e senha, sem considerar a data de nascimento que concluimos que não é tão relevante. Além disso, não conseguimos fazer a funcionalidade de "esqueci minha senha" mandar o email de fato.
 
-Alem disso, nao foi possivel implementar o esqueci minha senha
+Alem disso, nao foi possivel implementar o esqueci minha senha e trocar senha
 
 
 
