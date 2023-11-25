@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>Visualiza Publicacao</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="javascript/visualizaPub.js"></script>
     <script src="javascript/constantes.js"></script>
 </head>
-<body>
+
+<body class="bg-dark" style="margin-left: 5px;">
     <iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
     <div>
-    <h2>Publicacao #<span id='id'></span></h2>
-    <h1><span id='titulo'></span></h1>
-    <h8><span id='texto'></span></h8>
-    <h8>Autor: <span id='autor'></span></h8>
+        <h2 style="color: white;">Publicacao #<span id='id'></span></h2>
+        <h1 style="color: white;"><span id='titulo'></span></h1>
+        <h8 style="color: white;"><span id='texto'></span></h8>
+        <h8 style="color: white;">Autor: <span id='autor'></span></h8>
     </div>
 
-    <a>Comentarios</a>
+    <a style="color: white;">Comentarios</a>
     <form action="" method="get">
-        <table border="1">
-        <thead>
+        <table border="1" style="color: white;">
+        <thead style="color: white; height: 50px;"  >
         <tr>
-        <td>Autor</td><td>Comentario</td><td> </td>
+        <td>Autor</td><td>Comentario</td><td> </td> <td> </td>
         </tr>
         </thead>
         <tbody id="idtbody"></tbody>
         </table>
     
-        <input type="button" value="Insere" id="insere"/>
+        <input type="button" value="Inserir" id="insere" style="margin-top: 15px;"/>
     
         </form>
     </body>
