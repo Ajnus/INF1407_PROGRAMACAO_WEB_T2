@@ -27,7 +27,7 @@ onload = () => {
          idPlace.innerHTML = 'URL mal formada: ' + window.location;
     }
     (document.getElementById('insere') as HTMLButtonElement)
-        .addEventListener('click', evento => { location.href = 'insereCom.html' });
+        .addEventListener('click', evento => { location.href = 'insereCom.html?id=' + id });
     exibeListaComs(id); // exibe lista de publicacoes ao carregar a página
 
 
