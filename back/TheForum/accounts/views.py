@@ -12,7 +12,11 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from accounts.serializers import CreateUserSerializer, UserSerializer
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.decorators import permission_classes
+from rest_framework.decorators import authentication_classes
 
+@permission_classes([AllowAny])
 class CreateUserView(APIView):
     @swagger_auto_schema(
         operation_summary='Criar um novo usuário',
