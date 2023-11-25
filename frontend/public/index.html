@@ -14,18 +14,16 @@
 <body class="bg-dark" style="margin-left: 5px;">
     <iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
     <div class="d-flex flex-column justify-content-center justify-items-center" style="margin-left: 15px;">
-        <h1 style="color: #00FF41;"> The Forum </h1>
-        <a href="{% url 'forum:cria-publicacao' %}" style="margin: 20px; ">
-            Nova Publicação
-        </a>
+        <h1 style="color: #00FF41; margin-top: 15px; margin-bottom: 25px;"> The Forum </h1>
+        
         <br> <br> <br> <br>
         <!--h1 style="color: white;">Publicações:</h1-->
         <form action="" method="get">
             <table border="1"  style="color: white;">
                 <thead>
                     <tr>
-                        <td>Publicação</td>
-                        <td>Texto</td>
+                        <td>PUBLICAÇÃO</td>
+                        <td>TEXTO</td>
                         <td> </td>
                         <td> </td>
                     </tr>
@@ -33,7 +31,7 @@
                 <tbody id="idtbody"></tbody>
             </table>
 
-            <input type="button" value="Inserir" id="insere" />
+            <input type="button" value="Inserir" id="insere" style="margin-top: 15px;"/>
 
         </form>
     </div>
