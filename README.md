@@ -1,11 +1,4 @@
-# INF1407_T2
-
-
-Participantes: 
-
-Miguel Garcia - 2120240
-Jam Ajna Soares - 2211689
-
+![the forum](https://github.com/Ajnus/THE_FORUM_PROGRAMACAO_WEB_INF1407_T2/assets/8205907/8027e58a-7196-4565-8599-c97ffd3af5b8)
 
 # THE FORUM
 
@@ -67,6 +60,15 @@ Foi implementado autenticação completa, o CRUD completo de Publicações e CRD
 Durante o projeto tivemos mudanças de requisitos e optamos por fazer um Usuario com username, email e senha, sem considerar a data de nascimento que concluimos que não é tão relevante. Além disso, não conseguimos fazer a funcionalidade de "esqueci minha senha" mandar o email de fato.
 
 Alem disso, nao foi possivel implementar o esqueci minha senha e trocar senha
+
+# INF1407_T2
+
+
+Participantes: 
+
+Miguel Garcia - 2120240
+Jam Ajna Soares - 2211689
+
 
 
 
