@@ -4,26 +4,26 @@
 
 # O que é o THE FORUM?
 
-THE FORUM é o nosso projeto, o qual se baseia em um forum online.
+THE FORUM é o nosso projeto, o qual se baseia em um fórum online.
 
 # Como funciona o THE FORUM?
 
-Nele, o usuario terá acesso a uma lista de publicações, em que ele pode criar novas e alterar/deletar as suas.
+Nele, o usuário terá acesso a uma lista de publicações, em que ele pode criar novas e alterar/deletar as suas.
 
-Além disso, o usuario pode adicionar comentarios a uma publicação, independente se é sua ou de um terceiro.
+Além disso, o usuario pode adicionar comentários a uma publicação, independente de se é sua ou de um terceiro.
 
-Importante lembrar que, como a maioria dos foruns, o THE FORUM é publico, mas para ver os textos das publicacoes e poder criar seus proprios é necessario autenticação.
+Importante lembrar que - como a maioria dos fóruns - o THE FORUM é publico, mas para ver os textos das publicações e poder criar seus próprios é necessária uma autenticação.
 
 # Guia de instalação 
 
-1) Clone o repositorio com:
+1) Clone o repositório com:
 
 git clone https://github.com/miguelpgarcia/INF1407_T2.git
 
 
 2) BACK END
 
-21) Dentro do repositorio, ativa o ambiente virtual do back end:
+21) Dentro do repositório, ative o ambiente virtual do back end:
 
 
 cd back/
@@ -52,14 +52,12 @@ python3 -m http.server 8080
 
 # O que foi implementado
 
-Foi implementado autenticação completa, o CRUD completo de Publicações e CRD completo de Comentarios (na nossa concepção, não faz sentido editar comentarios) 
+Foram implementados: autenticação completa, o CRUD completo de Publicações e CRUD completo de Comentários (na nossa concepção, não faz sentido editar comentários) 
 
 
 # O que não foi implementado
 
-Durante o projeto tivemos mudanças de requisitos e optamos por fazer um Usuario com username, email e senha, sem considerar a data de nascimento que concluimos que não é tão relevante. Além disso, não conseguimos fazer a funcionalidade de "esqueci minha senha" mandar o email de fato.
-
-Alem disso, nao foi possivel implementar o esqueci minha senha e trocar senha
+Durante o projeto tivemos mudanças de requisitos e optamos por fazer um Usuário com username, email e senha, sem considerar a data de nascimento que concluimos não ser tão relevante. Além disso, não conseguimos fazer a funcionalidade de "esqueci minha senha" enviar o email de fato e não foi possivel implementar o 'esqueci minha senha' e 'trocar senha'.
 
 # INF1407_T2
 
@@ -68,7 +66,3 @@ Participantes:
 
 Miguel Garcia - 2120240
 Jam Ajna Soares - 2211689
-
-
-
-
